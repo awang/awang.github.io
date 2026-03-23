@@ -1,46 +1,70 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>School Rankings — Harvard / Princeton / MIT Placements</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-.controls { display: flex; gap: 8px; flex-wrap: wrap; padding: 1rem 0 0; margin-bottom: 10px; align-items: center; }
-select, input { font-size: 13px; padding: 5px 8px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: var(--color-background-primary); color: var(--color-text-primary); height: 32px; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #fff; color: #1a1a1a; padding: 24px 20px 40px; }
+h1 { font-size: 18px; font-weight: 500; margin-bottom: 4px; }
+.subtitle { font-size: 13px; color: #666; margin-bottom: 16px; }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; font-size: 12px; color: #555; align-items: center; }
+.legend-item { display: flex; align-items: center; gap: 5px; }
+.legend-swatch { width: 10px; height: 10px; border-radius: 2px; }
+.controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; align-items: center; }
+select, input[type=text] { font-size: 13px; padding: 5px 8px; border: 1px solid #ccc; border-radius: 6px; background: #fff; color: #1a1a1a; height: 32px; }
+select:focus, input:focus { outline: 2px solid #378ADD; outline-offset: 1px; }
+.summary { font-size: 12px; color: #888; }
 .badge { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 6px; border-radius: 10px; white-space: nowrap; }
-.ny  { background:#E6F1FB; color:#0C447C; }
-.ca  { background:#E1F5EE; color:#085041; }
-.pub { background:#F1EFE8; color:#444441; }
-.prv { background:#EEEDFE; color:#3C3489; }
+.ny  { background: #E6F1FB; color: #0C447C; }
+.ca  { background: #E1F5EE; color: #085041; }
+.pub { background: #F1EFE8; color: #444441; }
+.prv { background: #EEEDFE; color: #3C3489; }
 .tbl-wrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; font-size: 12.5px; table-layout: fixed; }
-th { text-align: left; font-size: 11px; font-weight: 500; color: var(--color-text-secondary); padding: 6px 6px; border-bottom: 0.5px solid var(--color-border-secondary); white-space: nowrap; cursor: pointer; user-select: none; }
-th:hover { color: var(--color-text-primary); }
-th.sorted { color: var(--color-text-primary); }
-td { padding: 6px 6px; border-bottom: 0.5px solid var(--color-border-tertiary); color: var(--color-text-primary); vertical-align: middle; }
+table { width: 100%; border-collapse: collapse; font-size: 12.5px; table-layout: fixed; min-width: 680px; }
+th { text-align: left; font-size: 11px; font-weight: 500; color: #888; padding: 6px; border-bottom: 1px solid #e0e0e0; white-space: nowrap; cursor: pointer; user-select: none; }
+th:hover { color: #333; }
+th.sorted { color: #1a1a1a; }
+td { padding: 6px; border-bottom: 1px solid #f0f0f0; color: #1a1a1a; vertical-align: middle; }
 tr:last-child td { border-bottom: none; }
-tr:hover td { background: var(--color-background-secondary); }
+tr:hover td { background: #f7f7f7; }
 .pct-bar { display: flex; align-items: center; gap: 5px; }
-.bar-bg { flex: 1; height: 5px; background: var(--color-background-tertiary); border-radius: 3px; min-width: 30px; }
+.bar-bg { flex: 1; height: 5px; background: #eee; border-radius: 3px; min-width: 30px; }
 .bar-fill { height: 5px; border-radius: 3px; }
-.pct-val { font-weight: 500; min-width: 34px; text-align: right; }
-.rank-num { color: var(--color-text-secondary); font-weight: 500; }
+.pct-val { font-weight: 500; min-width: 36px; text-align: right; font-size: 12px; }
+.rank-num { color: #999; font-weight: 500; }
 .school-name { font-weight: 500; line-height: 1.3; }
-.flag { font-size: 10px; color: var(--color-text-tertiary); }
-.summary { font-size: 12px; color: var(--color-text-secondary); }
 th:nth-child(1)  { width: 32px; }
-th:nth-child(2)  { min-width: 155px; }
-th:nth-child(3)  { width: 42px; }
-th:nth-child(4)  { width: 48px; }
+th:nth-child(2)  { min-width: 185px; }
+th:nth-child(3)  { width: 44px; }
+th:nth-child(4)  { width: 50px; }
 th:nth-child(5)  { width: 30px; }
 th:nth-child(6)  { width: 30px; }
 th:nth-child(7)  { width: 30px; }
-th:nth-child(8)  { width: 42px; }
-th:nth-child(9)  { width: 58px; }
-th:nth-child(10) { width: 44px; }
-th:nth-child(11) { width: 120px; }
+th:nth-child(8)  { width: 50px; }
+th:nth-child(9)  { width: 62px; }
+th:nth-child(10) { width: 46px; }
+th:nth-child(11) { width: 130px; }
+.note { font-size: 11px; color: #999; margin-top: 14px; }
 </style>
+</head>
+<body>
+<h1>School Rankings — Harvard / Princeton / MIT Placements</h1>
+<p class="subtitle">4-year totals (2021–2025) normalized by estimated senior class size. Click any column to sort.</p>
+
+<div class="legend">
+  <span style="font-weight:500;font-size:12px;">Bar colors:</span>
+  <span class="legend-item"><span class="legend-swatch" style="background:#534AB7"></span>NY Private</span>
+  <span class="legend-item"><span class="legend-swatch" style="background:#888780"></span>NY Public</span>
+  <span class="legend-item"><span class="legend-swatch" style="background:#0F6E56"></span>CA Private</span>
+  <span class="legend-item"><span class="legend-swatch" style="background:#1D9E75"></span>CA Public</span>
+</div>
 
 <div class="controls">
   <select id="filterArea"><option value="">All areas</option><option value="NY">NY area</option><option value="CA">California</option></select>
   <select id="filterType"><option value="">Pub &amp; private</option><option value="Public">Public only</option><option value="Private">Private only</option></select>
-  <input type="text" id="search" placeholder="Search school..." style="width:150px;">
+  <input type="text" id="search" placeholder="Search school..." style="width:160px;">
   <span class="summary" id="summary"></span>
 </div>
 
@@ -63,8 +87,11 @@ th:nth-child(11) { width: 120px; }
 </table>
 </div>
 
+<p class="note">* Senior class sizes are estimates based on total 9–12 enrollment ÷ 4, or from published school profiles where available. Laurel Springs is an online school; class size not applicable.<br>Sources: School profiles, Wikipedia, Niche, College Transitions, InsideSchools, and direct school publications.</p>
+
 <script>
 const raw = [
+  // NY Private
   ["Brearley School","NY","Private",18,9,1,28,63],
   ["Chapin School","NY","Private",8,7,0,15,40],
   ["Dalton School","NY","Private",23,11,3,37,105],
@@ -80,6 +107,7 @@ const raw = [
   ["Regis High School","NY","Private",5,6,0,11,131],
   ["Ethical Culture Fieldston","NY","Private",3,7,0,10,95],
   ["SAR High School","NY","Private",1,7,2,10,159],
+  // NY Public
   ["Hunter College HS","NY","Public",20,17,13,50,190],
   ["Stuyvesant HS","NY","Public",37,28,42,107,800],
   ["Bronx Science","NY","Public",21,14,33,68,745],
@@ -90,6 +118,21 @@ const raw = [
   ["Ward Melville Senior HS","NY","Public",7,8,5,20,600],
   ["LaGuardia HS","NY","Public",3,10,4,17,700],
   ["Brooklyn Tech","NY","Public",12,12,21,45,1425],
+  // CA Private
+  ["Harvard-Westlake School","CA","Private",34,12,8,54,292],
+  ["The Harker School","CA","Private",20,8,17,45,125],
+  ["Menlo School","CA","Private",11,6,5,22,150],
+  ["The Bishop's School","CA","Private",10,4,8,22,115],
+  ["Marlborough School","CA","Private",13,3,4,20,70],
+  ["Polytechnic School","CA","Private",9,6,0,15,88],
+  ["The Nueva School","CA","Private",6,5,4,15,65],
+  ["Lick-Wilmerding HS","CA","Private",4,6,4,14,140],
+  ["Sacred Heart Prep","CA","Private",6,8,0,14,150],
+  ["College Prep School","CA","Private",7,4,3,14,100],
+  ["Brentwood School","CA","Private",7,5,1,13,115],
+  ["Castilleja School","CA","Private",7,3,2,12,60],
+  ["Mater Dei HS","CA","Private",4,6,1,11,600],
+  ["Crystal Springs Uplands","CA","Private",2,5,3,10,125],
   ["SF University HS","CA","Private",6,3,1,10,109],
   ["Head-Royce School","CA","Private",3,3,3,9,113],
   ["St. Margaret's Episcopal","CA","Private",3,1,5,9,175],
@@ -97,16 +140,6 @@ const raw = [
   ["Archbishop Mitty HS","CA","Private",4,2,2,8,425],
   ["Santa Margarita Catholic HS","CA","Private",5,4,1,10,400],
   ["St. Francis HS (Mtn View)","CA","Private",6,1,2,9,400],
-  ["Campolindo HS","CA","Public",5,2,1,8,225],
-  ["La Cañada HS","CA","Public",4,3,2,9,300],
-  ["Del Norte HS","CA","Public",3,3,3,9,231],
-  ["Laguna Beach HS","CA","Public",1,6,2,9,350],
-  ["Los Altos HS","CA","Public",2,2,5,9,450],
-  ["North Hollywood Senior HS","CA","Public",3,2,4,9,500],
-  ["Torrey Pines HS","CA","Public",0,1,8,9,661],
-  ["Carlmont HS","CA","Public",1,2,5,8,475],
-  ["Aragon HS","CA","Public",3,0,5,8,422],
-  ["Cupertino HS","CA","Public",0,1,7,8,500],
   ["Thacher School","CA","Private",4,1,1,6,63],
   ["Branson School","CA","Private",5,2,0,7,105],
   ["La Jolla Country Day","CA","Private",2,2,2,6,75],
@@ -119,87 +152,101 @@ const raw = [
   ["Chadwick School","CA","Private",1,3,0,4,200],
   ["Lutheran HS Orange County","CA","Private",1,2,2,5,125],
   ["Laurel Springs School*","CA","Private",4,1,0,5,null],
+  // CA Public — original set
+  ["Campolindo HS","CA","Public",5,2,1,8,225],
+  ["La Cañada HS","CA","Public",4,3,2,9,300],
+  ["Del Norte HS","CA","Public",3,3,3,9,231],
+  ["Laguna Beach HS","CA","Public",1,6,2,9,350],
+  ["Los Altos HS","CA","Public",2,2,5,9,450],
+  ["North Hollywood Senior HS","CA","Public",3,2,4,9,500],
+  ["Torrey Pines HS","CA","Public",0,1,8,9,661],
+  ["Carlmont HS","CA","Public",1,2,5,8,475],
+  ["Aragon HS","CA","Public",3,0,5,8,422],
+  ["Cupertino HS","CA","Public",0,1,7,8,500],
+  // CA Public — new
+  ["Canyon Crest Academy","CA","Public",4,12,16,32,600],
+  ["Palo Alto High School","CA","Public",4,7,10,21,483],
+  ["Dougherty Valley HS","CA","Public",5,3,12,20,780],
+  ["Saratoga High School","CA","Public",5,2,12,19,300],
+  ["Mission San Jose HS","CA","Public",5,1,12,18,456],
+  ["Henry M. Gunn HS","CA","Public",5,4,8,17,428],
+  ["Lynbrook High School","CA","Public",2,3,12,17,430],
+  ["Lowell High School","CA","Public",9,1,6,16,635],
+  ["University High (Irvine)","CA","Public",7,2,6,15,138],
+  ["Amador Valley HS","CA","Public",4,2,6,12,644],
+  ["Menlo-Atherton HS","CA","Public",4,2,6,12,538],
+  ["Troy High School","CA","Public",5,1,6,12,636],
+  ["Westview High School","CA","Public",2,2,8,12,547],
+  ["Davis Senior HS","CA","Public",5,4,2,11,450],
+  ["Monta Vista High School","CA","Public",3,0,8,11,550],
+  ["Berkeley High School","CA","Public",4,2,4,10,775],
+  ["Corona del Mar HS","CA","Public",7,2,1,10,375],
+  ["Mountain View High School","CA","Public",3,2,5,10,529],
 ];
+
+const barColors = {
+  "NY-Private":"#534AB7","NY-Public":"#888780",
+  "CA-Private":"#0F6E56","CA-Public":"#1D9E75"
+};
 
 const data = raw.map(r => {
   const cls = r[7];
   const pct = cls ? (r[6]/4)/cls*100 : null;
   return { name:r[0], area:r[1], type:r[2], h:r[3], p:r[4], m:r[5], total:r[6], cls, avgYr:r[6]/4, pct };
 }).sort((a,b) => {
-  if (a.pct === null && b.pct === null) return 0;
-  if (a.pct === null) return 1;
-  if (b.pct === null) return -1;
+  if (!a.pct && !b.pct) return 0;
+  if (!a.pct) return 1; if (!b.pct) return -1;
   return b.pct - a.pct;
-}).map((r,i) => ({...r, rank: r.pct ? i+1 : '—'}));
+}).map((r,i) => ({...r, origRank: r.pct ? i+1 : null}));
 
-let sortCol = 10, sortDir = -1;
-function s(col) { sortCol === col ? sortDir *= -1 : (sortCol=col, sortDir=-1); render(); }
+const maxPct = Math.max(...data.filter(d=>d.pct).map(d=>d.pct));
+let sortCol=10, sortDir=-1;
 
-const maxPct = Math.max(...data.filter(d=>d.pct).map(d => d.pct));
+function s(col){ sortCol===col ? sortDir*=-1 : (sortCol=col,sortDir=-1); render(); }
 
-const barColors = {
-  "NY-Private": "#534AB7",
-  "NY-Public":  "#888780",
-  "CA-Private": "#0F6E56",
-  "CA-Public":  "#1D9E75",
-};
-
-function render() {
-  const area = document.getElementById('filterArea').value;
-  const type = document.getElementById('filterType').value;
-  const q = document.getElementById('search').value.toLowerCase();
-
-  let rows = data.filter(d =>
-    (!area || d.area === area) &&
-    (!type || d.type === type) &&
-    (!q || d.name.toLowerCase().includes(q))
-  );
-
-  const colFns = [
-    d => typeof d.rank==='number'?d.rank:999,
-    d => d.name, d => d.area, d => d.type,
-    d => d.h, d => d.p, d => d.m, d => d.total,
-    d => d.cls||0, d => d.avgYr, d => d.pct||0
+function render(){
+  const area=document.getElementById('filterArea').value;
+  const type=document.getElementById('filterType').value;
+  const q=document.getElementById('search').value.toLowerCase();
+  let rows=data.filter(d=>(!area||d.area===area)&&(!type||d.type===type)&&(!q||d.name.toLowerCase().includes(q)));
+  const fns=[
+    d=>d.pct?d.origRank:999,d=>d.name,d=>d.area,d=>d.type,
+    d=>d.h,d=>d.p,d=>d.m,d=>d.total,d=>d.cls||0,d=>d.avgYr,d=>d.pct||0
   ];
-
-  rows = [...rows].sort((a,b) => {
-    const va = colFns[sortCol](a), vb = colFns[sortCol](b);
-    if (typeof va === 'string') return sortDir * va.localeCompare(vb);
-    return sortDir * (va - vb);
+  rows=[...rows].sort((a,b)=>{
+    const va=fns[sortCol](a),vb=fns[sortCol](b);
+    return typeof va==='string' ? sortDir*va.localeCompare(vb) : sortDir*(va-vb);
   });
-
-  document.getElementById('summary').textContent = rows.length + ' schools';
-  document.querySelectorAll('th').forEach((th,i) => th.classList.toggle('sorted', i===sortCol));
-
-  const tbody = document.getElementById('tbody');
-  tbody.innerHTML = rows.map((d, i) => {
-    const barW = d.pct ? Math.round(d.pct / maxPct * 100) : 0;
-    const colorKey = d.area + '-' + d.type;
-    const barColor = barColors[colorKey] || '#888780';
-    const areaStyle = d.area === 'CA' ? 'background:#E1F5EE;color:#085041' : '';
-    const areaBadge = `<span class="badge ny" style="${areaStyle}">${d.area}</span>`;
-    const typeBadge = `<span class="badge ${d.type==='Public'?'pub':'prv'}">${d.type==='Public'?'pub':'priv'}</span>`;
-    const pctDisplay = d.pct
-      ? `<div class="pct-bar"><div class="bar-bg"><div class="bar-fill" style="width:${barW}%;background:${barColor}"></div></div><span class="pct-val">${d.pct.toFixed(1)}%</span></div>`
-      : `<span style="color:var(--color-text-tertiary);font-size:11px;">online</span>`;
-    const clsDisplay = d.cls ? `~${d.cls.toLocaleString()}` : `<span style="color:var(--color-text-tertiary)">—</span>`;
-    const rankDisplay = typeof d.rank === 'number' ? i+1 : '—';
+  document.getElementById('summary').textContent=rows.length+' schools';
+  document.querySelectorAll('th').forEach((th,i)=>th.classList.toggle('sorted',i===sortCol));
+  const tbody=document.getElementById('tbody');
+  tbody.innerHTML=rows.map((d,i)=>{
+    const barW=d.pct?Math.round(d.pct/maxPct*100):0;
+    const bc=barColors[d.area+'-'+d.type]||'#888';
+    const aStyle=d.area==='CA'?'background:#E1F5EE;color:#085041':'';
+    const ab=`<span class="badge ny" style="${aStyle}">${d.area}</span>`;
+    const tb=`<span class="badge ${d.type==='Public'?'pub':'prv'}">${d.type==='Public'?'pub':'priv'}</span>`;
+    const pctD=d.pct
+      ?`<div class="pct-bar"><div class="bar-bg"><div class="bar-fill" style="width:${barW}%;background:${bc}"></div></div><span class="pct-val">${d.pct.toFixed(1)}%</span></div>`
+      :`<span style="color:#bbb;font-size:11px;">online</span>`;
+    const clsD=d.cls?`~${d.cls.toLocaleString()}`:`<span style="color:#ccc">—</span>`;
     return `<tr>
-      <td class="rank-num">${rankDisplay}</td>
+      <td class="rank-num">${i+1}</td>
       <td class="school-name">${d.name}</td>
-      <td>${areaBadge}</td>
-      <td>${typeBadge}</td>
+      <td>${ab}</td><td>${tb}</td>
       <td>${d.h}</td><td>${d.p}</td><td>${d.m}</td>
       <td style="font-weight:500">${d.total}</td>
-      <td style="color:var(--color-text-secondary);font-size:12px">${clsDisplay}</td>
+      <td style="color:#888;font-size:12px">${clsD}</td>
       <td style="font-size:12px">${d.avgYr.toFixed(1)}</td>
-      <td>${pctDisplay}</td>
+      <td>${pctD}</td>
     </tr>`;
   }).join('');
 }
 
-document.getElementById('filterArea').addEventListener('change', render);
-document.getElementById('filterType').addEventListener('change', render);
-document.getElementById('search').addEventListener('input', render);
+document.getElementById('filterArea').addEventListener('change',render);
+document.getElementById('filterType').addEventListener('change',render);
+document.getElementById('search').addEventListener('input',render);
 render();
 </script>
+</body>
+</html>
